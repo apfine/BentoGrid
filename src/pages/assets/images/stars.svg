@@ -1,0 +1,15 @@
+<svg width="500" height="100" viewBox="0 0 500 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="500" height="100" fill="black" />
+  <g fill="#FFD76A" transform="translate(10,10)">
+    <!-- Star 1 -->
+    <polygon transform="translate(0,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
+    <!-- Star 2 -->
+    <polygon transform="translate(100,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
+    <!-- Star 3 -->
+    <polygon transform="translate(200,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
+    <!-- Star 4 -->
+    <polygon transform="translate(300,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
+    <!-- Star 5 -->
+    <polygon transform="translate(400,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
+  </g>
+</svg>

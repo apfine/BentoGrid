@@ -1,0 +1,16 @@
+<svg width="400" height="160" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect x="50" y="30" width="300" height="60" rx="30" fill="#FFD76A" />
+
+  <!-- Button Text -->
+  <text x="200" y="68" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#8B5CF6" font-weight="bold">
+    Create Post
+  </text>
+
+  <!-- Sparkle Icon (angled star) -->
+  <path
+    d="M0 -10 L6 0 L0 10 L-6 0 Z"
+    fill="#8B5CF6"
+    transform="translate(330,60) rotate(45)"
+  />
+</svg>

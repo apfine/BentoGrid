@@ -1,0 +1,31 @@
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient for button -->
+    <linearGradient id="buttonGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00F5FF" />
+      <stop offset="100%" stop-color="#8A2BE2" />
+    </linearGradient>
+
+    <!-- Shine effect -->
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="white" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Glow filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#8A2BE2" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- Outer button -->
+  <rect x="0" y="0" width="200" height="60" rx="15" fill="url(#buttonGradient)" filter="url(#glow)" />
+
+  <!-- Shine overlay -->
+  <rect x="0" y="0" width="200" height="30" rx="15" fill="url(#shine)" />
+
+  <!-- Text -->
+  <text x="100" y="38" font-family="Arial, sans-serif" font-size="22" fill="white" font-weight="bold" text-anchor="middle" letter-spacing="2">
+    JOIN
+  </text>
+</svg>
