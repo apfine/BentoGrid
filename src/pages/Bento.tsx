@@ -1,7 +1,32 @@
 import { useEffect, useRef, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion" // using framer to smoothen the animations like glass bead effect you see on click
+
+// static imports for all images to ensure Vite can bundle them
+import stars from "./assets/images/stars.svg"
+import schedulePosts from "./assets/images/illustration-schedule-posts.webp"
+import post from "./assets/images/post.svg"
+import consistentSchedule from "./assets/images/illustration-consistent-schedule.webp"
+import growFollowers from "./assets/images/illustration-grow-followers.webp"
+import aiContent from "./assets/images/illustration-ai-content.webp"
+import audience from "./assets/images/audience.svg"
+import multiplePlatforms from "./assets/images/illustration-multiple-platforms.webp"
+import join from "./assets/images/join.svg"
+
+// mapping string names to their respective imports
+const imageMap: Record<string, string> = {
+  "stars.svg": stars,
+  "illustration-schedule-posts.webp": schedulePosts,
+  "post.svg": post,
+  "illustration-consistent-schedule.webp": consistentSchedule,
+  "illustration-grow-followers.webp": growFollowers,
+  "illustration-ai-content.webp": aiContent,
+  "audience.svg": audience,
+  "illustration-multiple-platforms.webp": multiplePlatforms,
+  "join.svg": join,
+}
 
 const BentoGrid = () => {
+  // These are important states which operate the smooth functions of my app
   const gridRef = useRef<HTMLDivElement>(null)
   const [cols, setCols] = useState(["1fr", "1fr", "1fr"])
   const [rows, setRows] = useState(["1fr", "1fr", "1fr"])
@@ -10,6 +35,7 @@ const BentoGrid = () => {
   const [activeZoom, setActiveZoom] = useState<number | null>(null)
   const [focusedBox, setFocusedBox] = useState<number | null>(null)
 
+  // This is the part that checks for the screen ssize
   useEffect(() => {
     const handleResize = () => {
       const isMobile = window.innerWidth < 768
@@ -21,6 +47,7 @@ const BentoGrid = () => {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
+  // This is responsible for resizing of the grid
   useEffect(() => {
     if (mobile || !enableHoverResize) return
     const handleMove = (e: MouseEvent) => {
@@ -53,11 +80,12 @@ const BentoGrid = () => {
     const grid = gridRef.current
     grid?.addEventListener("mousemove", handleMove)
     return () => grid?.removeEventListener("mousemove", handleMove)
-  }, [mobile, enableHoverResize])
+  }, [mobile, enableHoverResize]) // dependencies
 
   return (
     <div className="min-h-screen w-full bg-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
 
+      {/* yaha se aap chahal pahal band kar sakte hain */}
       {!mobile && (
         <motion.div
           drag
@@ -82,11 +110,12 @@ const BentoGrid = () => {
         </motion.div>
       )}
 
+      {/* grid ji */}
       <div
         ref={gridRef}
         className={`w-full max-w-[95vw] transition-all duration-300 gap-4 ${
-          mobile ? "flex flex-col items-center py-4 px-4" : "grid md:aspect-[3/2]"}`
-        }
+          mobile ? "flex flex-col items-center py-4 px-4" : "grid md:aspect-[3/2]"
+        }`}
         style={
           !mobile
             ? {
@@ -116,6 +145,7 @@ const BentoGrid = () => {
                 transform: isFocused ? "scale(1.05)" : "scale(1)",
               }}
             >
+              {/* aura pro max */}
               <div
                 className="absolute -inset-1 z-[-1] blur-lg rounded-2xl"
                 style={{
@@ -124,14 +154,16 @@ const BentoGrid = () => {
                 }}
               />
 
+              {/* image render logic */}
               <img
-                src={`/images/${box.image}`}
+                src={imageMap[box.image]}
                 alt={`Bento ${idx}`}
                 className={`absolute inset-0 w-full h-full ${
                   box.contain ? "object-contain p-2" : "object-cover"
                 }`}
               />
 
+              {/* glass beads you see */}
               <AnimatePresence>
                 {isFocused &&
                   Array.from({ length: 12 }).map((_, i) => (
@@ -165,16 +197,46 @@ const BentoGrid = () => {
   )
 }
 
+// This is the grid data below for which all the operations are to be performed
 const gridData = [
-  { image: "stars.svg", contain: true, style: { gridColumn: "1 / 3", gridRow: "1 / 2" } },
-  { image: "illustration-schedule-posts.webp", style: { gridColumn: "3 / 4", gridRow: "1 / 3" } },
-  { image: "post.svg", style: { gridColumn: "1 / 2", gridRow: "2 / 3" } },
-  { image: "illustration-consistent-schedule.webp", style: { gridColumn: "2 / 3", gridRow: "2 / 3" } },
-  { image: "illustration-grow-followers.webp", style: { gridColumn: "1 / 2", gridRow: "3 / 4" } },
-  { image: "illustration-ai-content.webp", style: { gridColumn: "2 / 3", gridRow: "3 / 4" } },
-  { image: "audience.svg", style: { gridColumn: "3 / 4", gridRow: "3 / 4" } },
-  { image: "illustration-multiple-platforms.webp", style: { gridColumn: "2 / 3", gridRow: "2 / 3" } },
-  { image: "join.svg", style: { gridColumn: "2 / 3", gridRow: "2 / 3" } },
+  {
+    image: "stars.svg",
+    contain: true,
+    style: { gridColumn: "1 / 3", gridRow: "1 / 2" },
+  },
+  {
+    image: "illustration-schedule-posts.webp",
+    style: { gridColumn: "3 / 4", gridRow: "1 / 3" },
+  },
+  {
+    image: "post.svg",
+    style: { gridColumn: "1 / 2", gridRow: "2 / 3" },
+  },
+  {
+    image: "illustration-consistent-schedule.webp",
+    style: { gridColumn: "2 / 3", gridRow: "2 / 3" },
+  },
+  {
+    image: "illustration-grow-followers.webp",
+    style: { gridColumn: "1 / 2", gridRow: "3 / 4" },
+  },
+  {
+    image: "illustration-ai-content.webp",
+    style: { gridColumn: "2 / 3", gridRow: "3 / 4" },
+  },
+  {
+    image: "audience.svg",
+    style: { gridColumn: "3 / 4", gridRow: "3 / 4" },
+  },
+  {
+    image: "illustration-multiple-platforms.webp",
+    style: { gridColumn: "2 / 3", gridRow: "2 / 3" },
+  },
+  {
+    image: "join.svg",
+    style: { gridColumn: "2 / 3", gridRow: "2 / 3" },
+  },
 ]
 
+// chaliye shuru karte hain
 export default BentoGrid
