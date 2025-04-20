@@ -1,16 +1,36 @@
-<svg width="400" height="160" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background -->
-  <rect x="50" y="30" width="300" height="60" rx="30" fill="#FFD76A" />
+<svg width="258" height="405" viewBox="0 0 258 405" xmlns="http://www.w3.org/2000/svg">
+  <rect width="258" height="405" rx="16" fill="#FDEFE2" />
 
-  <!-- Button Text -->
-  <text x="200" y="68" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" fill="#8B5CF6" font-weight="bold">
-    Create Post
+  <!-- Text -->
+  <text x="30" y="110" font-family="Segoe UI, sans-serif" font-size="24" fill="#1A1A1A" font-weight="500">
+    Create and
+  </text>
+  <text x="30" y="145" font-family="Segoe UI, sans-serif" font-size="24" fill="#1A1A1A" font-weight="500">
+    schedule
+  </text>
+  <text x="30" y="180" font-family="Segoe UI, sans-serif" font-size="24" fill="#1A1A1A" font-weight="500">
+    content
+  </text>
+  <text x="30" y="215" font-family="Segoe UI, sans-serif" font-size="24" fill="#A45EFF" font-style="italic" font-weight="500">
+    quicker.
   </text>
 
-  <!-- Sparkle Icon (angled star) -->
-  <path
-    d="M0 -10 L6 0 L0 10 L-6 0 Z"
-    fill="#8B5CF6"
-    transform="translate(330,60) rotate(45)"
-  />
+  <!-- Button -->
+  <g transform="translate(30,260)">
+    <rect width="198" height="56" rx="28" fill="#FFC64D" />
+
+    <text x="30" y="36" font-family="Segoe UI, sans-serif" font-size="18" fill="#8A4DFF" font-weight="600">
+      Create Post
+    </text>
+
+    <!-- Sparkle Icon -->
+    <g transform="translate(140,20)">
+      <path d="M6 0L7.76 4.24L12 6L7.76 7.76L6 12L4.24 7.76L0 6L4.24 4.24L6 0Z" fill="#8A4DFF"/>
+    </g>
+  </g>
+
+  <!-- Arrow -->
+  <g transform="translate(124,325)">
+    <path d="M6 0C6.3 2 7.5 5.5 10 7C12.5 8.5 7 8.5 6 12C5 8.5 -0.5 8.5 2 7C4.5 5.5 5.7 2 6 0Z" fill="#1A1A1A"/>
+  </g>
 </svg>

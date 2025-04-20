@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion" // using framer to smoothen the animations like glass bead effect you see on click
+import { motion, AnimatePresence } from "framer-motion"
 
-// static imports for all images to ensure Vite can bundle them
+// static imports
 import stars from "./assets/images/stars.svg"
 import schedulePosts from "./assets/images/illustration-schedule-posts.webp"
 import post from "./assets/images/post.svg"
@@ -12,7 +12,7 @@ import audience from "./assets/images/audience.svg"
 import multiplePlatforms from "./assets/images/illustration-multiple-platforms.webp"
 import join from "./assets/images/join.svg"
 
-// mapping string names to their respective imports
+// image mapping
 const imageMap: Record<string, string> = {
   "stars.svg": stars,
   "illustration-schedule-posts.webp": schedulePosts,
@@ -26,16 +26,15 @@ const imageMap: Record<string, string> = {
 }
 
 const BentoGrid = () => {
-  // These are important states which operate the smooth functions of my app
   const gridRef = useRef<HTMLDivElement>(null)
-  const [cols, setCols] = useState(["1fr", "1fr", "1fr"])
-  const [rows, setRows] = useState(["1fr", "1fr", "1fr"])
+  const [cols, setCols] = useState(["1fr", "1fr", "1fr","1fr"])
+  const [rows, setRows] = useState(["1fr", "1fr", "1fr" , "1fr", "1fr", "1fr"])
   const [mobile, setMobile] = useState(typeof window !== "undefined" && window.innerWidth < 768)
   const [enableHoverResize, setEnableHoverResize] = useState(true)
   const [activeZoom, setActiveZoom] = useState<number | null>(null)
   const [focusedBox, setFocusedBox] = useState<number | null>(null)
 
-  // This is the part that checks for the screen ssize
+  // responsive check
   useEffect(() => {
     const handleResize = () => {
       const isMobile = window.innerWidth < 768
@@ -47,7 +46,7 @@ const BentoGrid = () => {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  // This is responsible for resizing of the grid
+  // grid hover resizing
   useEffect(() => {
     if (mobile || !enableHoverResize) return
     const handleMove = (e: MouseEvent) => {
@@ -56,8 +55,7 @@ const BentoGrid = () => {
 
       const mouseX = e.clientX - rect.left
       const mouseY = e.clientY - rect.top
-
-      const colWidth = rect.width / 3
+      const colWidth = rect.width / 4
       const rowHeight = rect.height / 3
 
       const getFlex = (dist: number) => Math.min(1.4, Math.max(0.9, 1.6 - dist / 150))
@@ -66,11 +64,15 @@ const BentoGrid = () => {
         getFlex(Math.abs(mouseX - colWidth * 0.5)),
         getFlex(Math.abs(mouseX - colWidth * 1.5)),
         getFlex(Math.abs(mouseX - colWidth * 2.5)),
+        getFlex(Math.abs(mouseX - colWidth * 3.5)),
       ]
       const newRows = [
         getFlex(Math.abs(mouseY - rowHeight * 0.5)),
         getFlex(Math.abs(mouseY - rowHeight * 1.5)),
         getFlex(Math.abs(mouseY - rowHeight * 2.5)),
+        getFlex(Math.abs(mouseY - rowHeight * 3.5)),
+        getFlex(Math.abs(mouseY - rowHeight * 4.5)),
+        getFlex(Math.abs(mouseY - rowHeight * 5.5)),
       ]
 
       setCols(newCols.map(n => `${n}fr`))
@@ -80,12 +82,10 @@ const BentoGrid = () => {
     const grid = gridRef.current
     grid?.addEventListener("mousemove", handleMove)
     return () => grid?.removeEventListener("mousemove", handleMove)
-  }, [mobile, enableHoverResize]) // dependencies
+  }, [mobile, enableHoverResize])
 
   return (
     <div className="min-h-screen w-full bg-white flex flex-col items-center justify-center p-4 relative overflow-hidden">
-
-      {/* yaha se aap chahal pahal band kar sakte hain */}
       {!mobile && (
         <motion.div
           drag
@@ -97,7 +97,7 @@ const BentoGrid = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setEnableHoverResize(prev => !prev)}
-            className="w-20 h-10 flex items-center bg-violet-500/30 backdrop-blur-md border border-violet-300 rounded-full shadow-[0_0_25px_#c084fc80] relative cursor-pointer"
+            className="w-20 h-10 flex items-center bg-violet-500/30 border border-violet-300 rounded-full shadow-[0_0_25px_#c084fc80] relative cursor-pointer"
           >
             <motion.div
               layout
@@ -110,23 +110,18 @@ const BentoGrid = () => {
         </motion.div>
       )}
 
-      {/* grid ji */}
+      {/* grid */}
       <div
         ref={gridRef}
-        className={`w-full max-w-[95vw] transition-all duration-300 gap-4 ${
-          mobile ? "flex flex-col items-center py-4 px-4" : "grid md:aspect-[3/2]"
+        className={`w-[90vw] h-[90vh] max-w-[95vw] transition-all duration-300 gap-4 ${
+          mobile ? "flex flex-col items-center py-4 px-4 max-w-[95vw] h-full" : "grid md:aspect-[4/3]"
         }`}
-        style={
-          !mobile
-            ? {
-                gridTemplateColumns: cols.join(" "),
-                gridTemplateRows: rows.join(" "),
-              }
-            : undefined
-        }
+        style={!mobile ? { gridTemplateColumns: cols.join(" "), gridTemplateRows: rows.join(" ") } : undefined}
       >
         {gridData.map((box, idx) => {
           const isFocused = (mobile && activeZoom === idx) || (!mobile && focusedBox === idx)
+          const [imgName, zStr] = box.image.split("+")
+          const zIndex = parseInt(zStr) || 0
 
           return (
             <div
@@ -134,50 +129,39 @@ const BentoGrid = () => {
               onClick={() => mobile && setActiveZoom(prev => (prev === idx ? null : idx))}
               onMouseEnter={() => !mobile && setFocusedBox(idx)}
               onMouseLeave={() => !mobile && setFocusedBox(null)}
-              className={`relative rounded-2xl overflow-hidden transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.2)] bg-gray-950 ${
-                mobile
-                  ? `w-full max-w-[560px] h-[200px] mb-4 ${isFocused ? "scale-105 z-10" : ""}`
-                  : ""
+              className={`relative rounded-2xl overflow-hidden transition-all duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.2)] ${
+                mobile ? `w-full max-w-[560px] h-[200px] mb-4 ${isFocused ? "scale-105 z-10" : ""}` : ""
               }`}
               style={{
                 ...(mobile ? {} : box.style ?? {}),
-                zIndex: isFocused ? 10 : 0,
+                zIndex: isFocused ? 10 : zIndex,
                 transform: isFocused ? "scale(1.05)" : "scale(1)",
               }}
             >
-              {/* aura pro max */}
-              <div
-                className="absolute -inset-1 z-[-1] blur-lg rounded-2xl"
-                style={{
-                  background: "linear-gradient(135deg, #00ffff, #ff00ff)",
-                  opacity: 0.3,
-                }}
-              />
+              {/*text and image in one container , rendering method*/}
+              <div className="absolute inset-0 w-full h-full" style={{ zIndex }}>
+                <img
+                  src={imageMap[imgName]}
+                  alt={`Bento ${idx}`}
+                  className={`absolute inset-0 w-full h-full ${
+                    box.contain ? "object-contain p-2" : "object-cover"
+                  }`}
+                />
+                {box.text && (
+                  <div className="absolute top-0 left-0 w-full px-4 py-2 text-black text-lg font-bold text-left">
+                    {box.text}
+                  </div>
+                )}
+              </div>
 
-              {/* image render logic */}
-              <img
-                src={imageMap[box.image]}
-                alt={`Bento ${idx}`}
-                className={`absolute inset-0 w-full h-full ${
-                  box.contain ? "object-contain p-2" : "object-cover"
-                }`}
-              />
-
-              {/* glass beads you see */}
+              {/* glassy sparkle */}
               <AnimatePresence>
                 {isFocused &&
                   Array.from({ length: 12 }).map((_, i) => (
                     <motion.div
                       key={i}
-                      className="absolute w-2 h-2 bg-violet-300/50 rounded-full backdrop-blur-md pointer-events-none"
-                      initial={{
-                        top: "50%",
-                        left: "50%",
-                        opacity: 1,
-                        scale: 1,
-                        x: 0,
-                        y: 0,
-                      }}
+                      className="absolute w-2 h-2 bg-violet-300/50 rounded-full pointer-events-none"
+                      initial={{ top: "50%", left: "50%", opacity: 1, scale: 1, x: 0, y: 0 }}
                       animate={{
                         x: Math.cos((i / 12) * 2 * Math.PI) * 100,
                         y: Math.sin((i / 12) * 2 * Math.PI) * 100,
@@ -200,43 +184,48 @@ const BentoGrid = () => {
 // This is the grid data below for which all the operations are to be performed
 const gridData = [
   {
-    image: "stars.svg",
+    image: "post.svg+1",
+    text: "",
+    style: { gridColumn: "1 / 2", gridRow: "1 / 4" },
+  },
+  {
+    image: "stars.svg+1",
+    text: "Get improved Ratings",
+    style: { gridColumn: "2 / 4", gridRow: "1 / 3" },
+  },
+  {
+    image: "illustration-schedule-posts.webp+1",
+    text: "",
+    style: { gridColumn: "4 / 5", gridRow: "1 / 5" },
+  },
+  {
+    image: "illustration-ai-content.webp+1",
+    text: "AI Content",
     contain: true,
-    style: { gridColumn: "1 / 3", gridRow: "1 / 2" },
+    style: { gridColumn: "1 / 2", gridRow: "4/ 7" },
   },
   {
-    image: "illustration-schedule-posts.webp",
-    style: { gridColumn: "3 / 4", gridRow: "1 / 3" },
+    image: "illustration-multiple-platforms.webp+1",
+    text: "Multiple Platforms",
+    contain: true,
+    style: { gridColumn: "3 / 4", gridRow: "3/ 5" },
   },
   {
-    image: "post.svg",
-    style: { gridColumn: "1 / 2", gridRow: "2 / 3" },
+    image: "illustration-consistent-schedule.webp+1",
+    text: "",
+    contain: true,
+    style: { gridColumn: "2 / 3", gridRow: "3/5" },
   },
   {
-    image: "illustration-consistent-schedule.webp",
-    style: { gridColumn: "2 / 3", gridRow: "2 / 3" },
+    image: "audience.svg+1",
+    text: "",
+    style: { gridColumn: "2 / 3", gridRow: "5/7" },
   },
   {
-    image: "illustration-grow-followers.webp",
-    style: { gridColumn: "1 / 2", gridRow: "3 / 4" },
-  },
-  {
-    image: "illustration-ai-content.webp",
-    style: { gridColumn: "2 / 3", gridRow: "3 / 4" },
-  },
-  {
-    image: "audience.svg",
-    style: { gridColumn: "3 / 4", gridRow: "3 / 4" },
-  },
-  {
-    image: "illustration-multiple-platforms.webp",
-    style: { gridColumn: "2 / 3", gridRow: "2 / 3" },
-  },
-  {
-    image: "join.svg",
-    style: { gridColumn: "2 / 3", gridRow: "2 / 3" },
+    image: "join.svg+1",
+    text: "Join Today",
+    style: { gridColumn: "3 / 6", gridRow: "5/7" },
   },
 ]
 
-// chaliye shuru karte hain
 export default BentoGrid

@@ -1,15 +1,26 @@
-<svg width="500" height="100" viewBox="0 0 500 100" xmlns="http://www.w3.org/2000/svg">
-  <rect width="500" height="100" fill="black" />
-  <g fill="#FFD76A" transform="translate(10,10)">
-    <!-- Star 1 -->
-    <polygon transform="translate(0,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
-    <!-- Star 2 -->
-    <polygon transform="translate(100,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
-    <!-- Star 3 -->
-    <polygon transform="translate(200,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
-    <!-- Star 4 -->
-    <polygon transform="translate(300,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
-    <!-- Star 5 -->
-    <polygon transform="translate(400,0)" points="50,15 61,35 84,38 66,54 71,77 50,65 29,77 34,54 16,38 39,35" />
+<svg width="512" height="329" viewBox="0 0 512 329" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="329" rx="16" fill="#8A4DFF" />
+  
+  <!-- Main Text -->
+  <text x="50%" y="40%" dominant-baseline="middle" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="32" fill="white">
+    Social Media
+    <tspan fill="#FFD15A"> 10x</tspan>
+  </text>
+  <text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle" font-family="Segoe UI, sans-serif" font-style="italic" font-size="32" fill="white">
+    Faster with AI
+  </text>
+
+  <!-- Stars -->
+  <g transform="translate(135, 200)" fill="#FFD15A">
+    <polygon points="15,0 19,10 30,11 22,18 24,29 15,24 6,29 8,18 0,11 11,10" />
+    <polygon points="65,0 69,10 80,11 72,18 74,29 65,24 56,29 58,18 50,11 61,10" />
+    <polygon points="115,0 119,10 130,11 122,18 124,29 115,24 106,29 108,18 100,11 111,10" />
+    <polygon points="165,0 169,10 180,11 172,18 174,29 165,24 156,29 158,18 150,11 161,10" />
+    <polygon points="215,0 219,10 230,11 222,18 224,29 215,24 206,29 208,18 200,11 211,10" />
   </g>
+
+  <!-- Review Text -->
+  <text x="50%" y="78%" dominant-baseline="middle" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="16" fill="white" opacity="0.9">
+    Over 4,000 5-star reviews
+  </text>
 </svg>
